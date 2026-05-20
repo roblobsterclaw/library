@@ -4,21 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="JFL Project Library — master directory for all of Joe Lynch's projects.">
-<meta name="theme-color" content="#0D1117">
+<meta name="theme-color" content="#F8F9FA">
 <title>🦞 JFL Project Library</title>
 <style>
   :root {
-    --bg: #0D1117;
-    --card: #161B22;
-    --border: #30363D;
-    --accent: #FF6B00;
-    --gold: #C59E3C;
-    --text: #E6EDF3;
-    --text-dim: #8B949E;
-    --green: #238636;
-    --yellow: #D29922;
-    --gray: #6E7681;
-    --blue: #1F6FEB;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --accent: #1E3A8A;
+    --accent-light: #3B82F6;
+    --gold: #3B82F6;
+    --text: #1A1A2E;
+    --text-dim: #6C757D;
+    --green: #059669;
+    --yellow: #D97706;
+    --gray: #9CA3AF;
+    --blue: #6366F1;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,6 +79,7 @@
     border-radius: 12px;
     padding: 14px 8px;
     text-align: center;
+    box-shadow: var(--card-shadow);
   }
 
   .stat .num {
@@ -99,7 +102,7 @@
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(13, 17, 23, 0.95);
+    background: rgba(248, 249, 250, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
@@ -130,8 +133,8 @@
 
   .search-input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+    border-color: var(--accent-light);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   }
 
   .filter-group {
@@ -151,7 +154,7 @@
   }
 
   .pill {
-    background: var(--card);
+    background: #FFFFFF;
     border: 1px solid var(--border);
     border-radius: 999px;
     color: var(--text-dim);
@@ -164,14 +167,14 @@
   }
 
   .pill:hover {
-    border-color: var(--accent);
-    color: var(--text);
+    border-color: var(--accent-light);
+    color: var(--accent);
   }
 
   .pill.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: #0D1117;
+    color: #FFFFFF;
     font-weight: 700;
   }
 
@@ -199,13 +202,14 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    box-shadow: var(--card-shadow);
     transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
 
   .card:hover {
     transform: translateY(-3px);
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-light);
+    box-shadow: 0 8px 24px rgba(30, 58, 138, 0.15);
   }
 
   .card.has-live {
@@ -251,7 +255,7 @@
   }
 
   .badge.status-active { background: var(--green); color: #fff; }
-  .badge.status-paused { background: var(--yellow); color: #0D1117; }
+  .badge.status-paused { background: var(--yellow); color: #fff; }
   .badge.status-archived { background: var(--gray); color: #fff; }
   .badge.status-idea { background: var(--blue); color: #fff; }
 
@@ -318,7 +322,7 @@
   .link-btn.live {
     background: var(--accent);
     border-color: var(--accent);
-    color: #0D1117;
+    color: #FFFFFF;
   }
 
   .link-btn.live:hover { filter: brightness(1.1); }
