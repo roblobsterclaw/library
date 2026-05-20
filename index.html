@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JFL Project Library — master directory for all of Joe Lynch's projects.">
+<meta name="theme-color" content="#0D1117">
+<title>🦞 JFL Project Library</title>
+<style>
+  :root {
+    --bg: #0D1117;
+    --card: #161B22;
+    --border: #30363D;
+    --accent: #FF6B00;
+    --gold: #C59E3C;
+    --text: #E6EDF3;
+    --text-dim: #8B949E;
+    --green: #238636;
+    --yellow: #D29922;
+    --gray: #6E7681;
+    --blue: #1F6FEB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    text-align: center;
+    padding: 32px 16px 20px;
+  }
+
+  header h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  header h1 .accent { color: var(--accent); }
+
+  header .subtitle {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+
+  /* ===== STATS BAR ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 1200px;
+    margin: 20px auto 0;
+  }
+
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+  }
+
+  .stat .num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  .stat .label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+
+  /* ===== STICKY FILTER BAR ===== */
+  .filterbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    margin-top: 20px;
+  }
+
+  .filterbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 1rem;
+    padding: 12px 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+  }
+
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filter-group .group-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 2px;
+    width: 100%;
+  }
+
+  .pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: inherit;
+    padding: 7px 13px;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .pill:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0D1117;
+    font-weight: 700;
+  }
+
+  .results-count {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  .results-count strong { color: var(--gold); }
+
+  /* ===== GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .card.has-live {
+    border-left: 3px solid var(--accent);
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+  }
+
+  .card-name:hover { color: var(--accent); }
+
+  .card-name.linked::after {
+    content: " ↗";
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .badge {
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .badge.status-active { background: var(--green); color: #fff; }
+  .badge.status-paused { background: var(--yellow); color: #0D1117; }
+  .badge.status-archived { background: var(--gray); color: #fff; }
+  .badge.status-idea { background: var(--blue); color: #fff; }
+
+  .badge.type {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--gold);
+  }
+
+  .card-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .meta-row .agents {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .agent-icon {
+    font-size: 0.95rem;
+    cursor: default;
+  }
+
+  .local-path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 8px;
+    word-break: break-all;
+  }
+
+  .links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .link-btn {
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 7px 12px;
+    transition: all 0.18s ease;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .link-btn.live {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0D1117;
+  }
+
+  .link-btn.live:hover { filter: brightness(1.1); }
+
+  .link-btn.github:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    font-size: 0.74rem;
+    color: var(--text-dim);
+  }
+
+  .branch-info {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: var(--gold);
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 60px 20px;
+    font-size: 1rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    padding: 36px 16px 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  footer a { color: var(--accent); }
+  footer a:hover { text-decoration: underline; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 640px) {
+    header h1 { font-size: 2.4rem; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .filterbar-inner { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🦞 JFL <span class="accent">Project Library</span></h1>
+  <p class="subtitle">Command Center — All Projects, All Agents, One Place</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="filterbar">
+  <div class="filterbar-inner">
+    <input type="search" class="search-input" id="search" placeholder="Search projects..." autocomplete="off" aria-label="Search projects">
+
+    <div class="filter-group" id="status-filters">
+      <span class="group-label">Status</span>
+    </div>
+
+    <div class="filter-group" id="type-filters">
+      <span class="group-label">Type</span>
+    </div>
+
+    <div class="filter-group" id="agent-filters">
+      <span class="group-label">Built by</span>
+    </div>
+
+    <div class="results-count" id="results-count"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <p>Managed by Hermes ⚡ | Updated automatically</p>
+  <p style="margin-top:6px;">GitHub Projects board — <em>coming soon</em></p>
+</footer>
+
+<script>
+/* =========================================================
+   PROJECTS — single source of truth.
+   Any agent can edit this array to add/modify projects.
+   ========================================================= */
+const PROJECTS = [
+  // === ACTIVE PROJECTS ===
+  {
+    name: "MOSE Dashboard",
+    slug: "mose",
+    status: "active",
+    type: "dashboard",
+    description: "Super investor 13F tracker — 6 tabs, 17 investors, SEC filing analysis",
+    builtBy: ["rob", "hermes"],
+    githubRepo: "https://github.com/roblobsterclaw/mose",
+    githubPages: "https://roblobsterclaw.github.io/mose/",
+    localPath: "~/Documents/Codex/MOSE DASHBOARD",
+    branches: ["main", "gh-pages"],
+    lastUpdated: "2026-05-18",
+    notes: "Firebase sync, auto-deploys via GitHub Actions"
+  },
+  {
+    name: "Mission Control",
+    slug: "mission-control",
+    status: "active",
+    type: "dashboard",
+    description: "AI team command center — daily ops dashboard for Rob, Hermes, and Joe",
+    builtBy: ["rob", "hermes"],
+    githubRepo: "https://github.com/roblobsterclaw/mission-control",
+    githubPages: "https://roblobsterclaw.github.io/mission-control/",
+    localPath: "~/.openclaw/workspace/projects/mission-control-dashboard",
+    branches: ["main", "gh-pages", "mission-control-v2-ops"],
+    lastUpdated: "2026-05-20",
+    notes: "Updated daily by Rob"
+  },
+  {
+    name: "World Cup Pool",
+    slug: "world-cup-pool",
+    status: "active",
+    type: "website",
+    description: "Rob Lobster Cup 2026 — World Cup prediction pool, $25 entry",
+    builtBy: ["rob", "hermes", "codex"],
+    githubRepo: "https://github.com/roblobsterclaw/roblobstercup",
+    githubPages: "https://roblobstercup.com/",
+    localPath: "~/Documents/roblobstercup",
+    branches: ["main", "gh-pages"],
+    lastUpdated: "2026-05-15",
+    notes: "Custom domain roblobstercup.com, Supabase backend"
+  },
+  {
+    name: "JFL TTD Dashboard",
+    slug: "jfl-ttd",
+    status: "active",
+    type: "dashboard",
+    description: "Things To Do — Joe's personal task tracker, 87 items, Firebase sync",
+    builtBy: ["rob", "hermes"],
+    githubRepo: "https://github.com/roblobsterclaw/jfl-ttd",
+    githubPages: "https://roblobsterclaw.github.io/jfl-ttd/",
+    localPath: "~/.openclaw/workspace/projects/ttd-dashboard-v2",
+    branches: ["main"],
+    lastUpdated: "2026-05-04",
+    notes: "v5.91, PRIMARY TTD tool"
+  },
+  {
+    name: "Lobster Press",
+    slug: "lobster-press",
+    status: "active",
+    type: "website",
+    description: "Social media content factory — TLC, Surfbox, Keli content publishing",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/lobster-press",
+    githubPages: "https://roblobsterclaw.github.io/lobster-press/",
+    localPath: "~/.openclaw/workspace/projects/lobster-press",
+    branches: ["main"],
+    lastUpdated: "2026-05-20",
+    notes: "Social media command center"
+  },
+  {
+    name: "Trial Ledger",
+    slug: "trial-ledger",
+    status: "active",
+    type: "app",
+    description: "Accounting web app — bank statement processing, exports, demo mode",
+    builtBy: ["codex", "rob"],
+    githubRepo: "https://github.com/roblobsterclaw/trial-ledger-demo",
+    githubPages: "",
+    localPath: "~/Documents/Codex/Trial Ledger WS",
+    branches: ["main"],
+    lastUpdated: "2026-05-15",
+    notes: "Private repo, Python backend"
+  },
+  {
+    name: "Model Cost Tracker",
+    slug: "model-cost-tracker",
+    status: "active",
+    type: "dashboard",
+    description: "AI model spending tracker — monitors OpenRouter, Anthropic costs",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/model-cost-tracker",
+    branches: [],
+    lastUpdated: "2026-05-20",
+    notes: "JS dashboard + JSON data, local only"
+  },
+  {
+    name: "Daily Reports",
+    slug: "daily-reports",
+    status: "active",
+    type: "document",
+    description: "Morning Rundown & Mission Control daily report generator — 89 Word docs",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/daily",
+    branches: [],
+    lastUpdated: "2026-05-20",
+    notes: "45 Python scripts, generates daily .docx reports"
+  },
+  {
+    name: "Investing Research",
+    slug: "investing",
+    status: "active",
+    type: "research",
+    description: "Margin-of-safety engine, deep dives, MOSE data, Truist analysis",
+    builtBy: ["rob", "hermes"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/investing",
+    branches: [],
+    lastUpdated: "2026-05-15",
+    notes: "Python + HTML research, 112 images"
+  },
+  // === WEBSITES & GAMES ===
+  {
+    name: "Document Vault",
+    slug: "vault",
+    status: "active",
+    type: "website",
+    description: "Secure document vault — Word docs, Excel files organized by business area",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/vault",
+    githubPages: "https://roblobsterclaw.github.io/vault/",
+    localPath: "~/.openclaw/workspace/projects/vault",
+    branches: ["main"],
+    lastUpdated: "2026-05-07",
+    notes: "154 Word docs, 21 Excel files, password: [redacted]"
+  },
+  {
+    name: "Unicorn Factory",
+    slug: "unicorn-factory",
+    status: "paused",
+    type: "dashboard",
+    description: "AI-powered deal flow pipeline — 59 business ideas scored and ranked",
+    builtBy: ["rob", "hermes"],
+    githubRepo: "https://github.com/roblobsterclaw/unicorn-factory",
+    githubPages: "https://roblobsterclaw.github.io/unicorn-factory/",
+    localPath: "~/.openclaw/workspace/projects/unicorn-factory",
+    branches: ["main"],
+    lastUpdated: "2026-05-04",
+    notes: "Scout cron paused per Joe"
+  },
+  {
+    name: "Arcade — Joe's Old Time Video Games",
+    slug: "arcade",
+    status: "active",
+    type: "game",
+    description: "Classic arcade games playable in the browser — Asteroids, Space Invaders, hub",
+    builtBy: ["codex", "rob"],
+    githubRepo: "https://github.com/roblobsterclaw/arcade",
+    githubPages: "https://roblobsterclaw.github.io/arcade/",
+    localPath: "~/Documents/Codex/Joes Old Time Video Games",
+    branches: ["main"],
+    lastUpdated: "2026-05-03",
+    notes: "HTML5 browser games"
+  },
+  {
+    name: "Ms. Pac-Man",
+    slug: "ms-pacman",
+    status: "active",
+    type: "game",
+    description: "Browser-based Ms. Pac-Man game",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/ms-pacman",
+    githubPages: "https://roblobsterclaw.github.io/ms-pacman/",
+    localPath: "",
+    branches: ["main"],
+    lastUpdated: "2026-05-19",
+    notes: "Not cloned locally"
+  },
+  {
+    name: "Lobster Synth",
+    slug: "lobster-synth",
+    status: "active",
+    type: "app",
+    description: "Browser-based synthesizer",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/lobster-synth",
+    githubPages: "https://roblobsterclaw.github.io/lobster-synth/",
+    localPath: "",
+    branches: ["main"],
+    lastUpdated: "2026-05-19",
+    notes: "Not cloned locally"
+  },
+  {
+    name: "Asteroids",
+    slug: "asteroids",
+    status: "active",
+    type: "game",
+    description: "Browser-based Asteroids game — standalone version",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/asteroids",
+    githubPages: "https://roblobsterclaw.github.io/asteroids/",
+    localPath: "~/.openclaw/workspace/projects/asteroids",
+    branches: ["main"],
+    lastUpdated: "2026-04-23",
+    notes: ""
+  },
+  // === BUSINESS PROJECTS ===
+  {
+    name: "Cassidy's Kitchen",
+    slug: "cassidys-kitchen",
+    status: "active",
+    type: "website",
+    description: "Food truck website — restaurant/kitchen site with images",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/cassidys-kitchen",
+    githubPages: "https://roblobsterclaw.github.io/cassidys-kitchen/",
+    localPath: "~/.openclaw/workspace/projects/cassidys-kitchen",
+    branches: ["main"],
+    lastUpdated: "2026-04-30",
+    notes: "63MB repo — largest"
+  },
+  {
+    name: "LBI Athletic Club",
+    slug: "lbi-athletic-club",
+    status: "active",
+    type: "website",
+    description: "Community athletic club website for Long Beach Island, NJ",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/lbi-athletic-club",
+    githubPages: "https://roblobsterclaw.github.io/lbi-athletic-club/",
+    localPath: "",
+    branches: ["main"],
+    lastUpdated: "2026-04-20",
+    notes: "Not cloned locally"
+  },
+  {
+    name: "ReBolt",
+    slug: "rebolt",
+    status: "paused",
+    type: "rendering",
+    description: "Product renders, pitch deck, prototype tracking — lumber innovation product",
+    builtBy: ["codex", "rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/REBOLT",
+    branches: [],
+    lastUpdated: "2026-05-05",
+    notes: "82 images, git repo but no remote"
+  },
+  {
+    name: "ReBolt Renders",
+    slug: "rebolt-renders",
+    status: "paused",
+    type: "rendering",
+    description: "Architectural renderings for ReBolt product line",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/rebolt-renders",
+    branches: [],
+    lastUpdated: "2026-04-27",
+    notes: "12 render images"
+  },
+  {
+    name: "Firehouse Renderings",
+    slug: "firehouse",
+    status: "paused",
+    type: "rendering",
+    description: "Firehouse-to-residence conversion — architectural renderings and plans",
+    builtBy: ["codex", "rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/FIREHOUSE RENDERING",
+    branches: [],
+    lastUpdated: "2026-05-07",
+    notes: "26 images + presentations. Also at ~/.openclaw/workspace/projects/firehouse (38 images)"
+  },
+  {
+    name: "Equipment Scout",
+    slug: "equipment-scout",
+    status: "paused",
+    type: "app",
+    description: "Equipment search tool with scrapers — find deals on heavy equipment",
+    builtBy: ["codex"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/equipment-scout-app",
+    branches: [],
+    lastUpdated: "2026-05-14",
+    notes: "Python app, git but no remote"
+  },
+  // === DOCUMENTS & RESEARCH ===
+  {
+    name: "Document Vault (Local Backup)",
+    slug: "document-vault-local",
+    status: "active",
+    type: "document",
+    description: "Local backup of online Document Vault — 154 Word docs, 21 Excel files",
+    builtBy: ["joe", "rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Document Vault",
+    branches: [],
+    lastUpdated: "2026-05-07",
+    notes: "Mirrors online vault. Categories: Research, ReBolt, Investing, Family, Firehouse, Tuckerton, Surfbox, Lobster Press, Rundowns"
+  },
+  {
+    name: "HSA vs HRA Research",
+    slug: "hsa-hra",
+    status: "archived",
+    type: "research",
+    description: "Health Savings Account vs Health Reimbursement Arrangement comparison",
+    builtBy: ["codex"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/HSA vs HRA Research",
+    branches: [],
+    lastUpdated: "2026-05-05",
+    notes: "Research project"
+  },
+  {
+    name: "KW Coffee Room",
+    slug: "kw-coffee-room",
+    status: "archived",
+    type: "rendering",
+    description: "Keller Williams office coffee room concept images",
+    builtBy: ["codex"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/KW coffee room",
+    branches: [],
+    lastUpdated: "2026-05-03",
+    notes: "10 images"
+  },
+  {
+    name: "Social Media",
+    slug: "social-media",
+    status: "paused",
+    type: "document",
+    description: "Social media content and strategy planning",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/social-media",
+    branches: [],
+    lastUpdated: "2026-04-27",
+    notes: "Python + documents"
+  },
+  {
+    name: "Ceremony",
+    slug: "ceremony",
+    status: "archived",
+    type: "document",
+    description: "Event/ceremony planning documents",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/ceremony",
+    branches: [],
+    lastUpdated: "2026-04-27",
+    notes: "3 Word docs"
+  },
+  {
+    name: "TLC (Tuckerton Lumber)",
+    slug: "tlc",
+    status: "active",
+    type: "document",
+    description: "Tuckerton Lumber Co. — documents, zoning, business files",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/tlc",
+    branches: [],
+    lastUpdated: "2026-04-27",
+    notes: "HTML + documents + images, includes zoning subfolder"
+  },
+  {
+    name: "Web Clients",
+    slug: "web-clients",
+    status: "archived",
+    type: "website",
+    description: "LBI Athletic Club client site — early version",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/web-clients",
+    branches: [],
+    lastUpdated: "2026-04-19",
+    notes: "HTML website"
+  },
+  {
+    name: "World Cup Pool Preview",
+    slug: "roblobstercup-preview",
+    status: "archived",
+    type: "website",
+    description: "Preview/teaser site for Rob Lobster Cup XXIII",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/roblobstercup-xxiii-preview",
+    githubPages: "https://roblobsterclaw.github.io/roblobstercup-xxiii-preview/",
+    localPath: "",
+    branches: ["main"],
+    lastUpdated: "2026-05-08",
+    notes: "Not cloned locally"
+  },
+  {
+    name: "TTD Dashboard v1",
+    slug: "ttd-v1",
+    status: "archived",
+    type: "dashboard",
+    description: "Original TTD dashboard — replaced by JFL TTD v5",
+    builtBy: ["rob"],
+    githubRepo: "https://github.com/roblobsterclaw/ttd",
+    githubPages: "https://roblobsterclaw.github.io/ttd/",
+    localPath: "~/.openclaw/workspace/projects/ttd-dashboard",
+    branches: ["main"],
+    lastUpdated: "2026-05-04",
+    notes: "Legacy — redirects to jfl-ttd"
+  },
+  {
+    name: "MOSE Project (Next.js)",
+    slug: "mose-nextjs",
+    status: "archived",
+    type: "app",
+    description: "Next.js/TypeScript version of MOSE — superseded by current HTML dashboard",
+    builtBy: ["codex"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/MOSE PROJECT",
+    branches: [],
+    lastUpdated: "2026-05-02",
+    notes: "Supabase backend, not in use"
+  },
+  {
+    name: "Rob Lobster Cup Rebuild",
+    slug: "cup-rebuild",
+    status: "paused",
+    type: "app",
+    description: "Next.js rebuild of World Cup Pool — Supabase auth",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/New project/rob-lobster-cup-rebuild",
+    branches: [],
+    lastUpdated: "2026-05-08",
+    notes: "Next.js/TypeScript, paused in favor of static site"
+  },
+  {
+    name: "General Mini Projects",
+    slug: "general",
+    status: "archived",
+    type: "research",
+    description: "Mixed bag — GLP1/T1D report, equipment tracker, portable storage survey",
+    builtBy: ["codex"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/Documents/Codex/General (mini projects & chats)",
+    branches: [],
+    lastUpdated: "2026-05-01",
+    notes: "Miscellaneous Codex Desktop outputs"
+  },
+  {
+    name: "Claude History Archive",
+    slug: "claude-history",
+    status: "archived",
+    type: "document",
+    description: "Exported Claude conversation history",
+    builtBy: ["joe"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/claude-history",
+    branches: [],
+    lastUpdated: "2026-04-01",
+    notes: "4 JSON files"
+  },
+  {
+    name: "Idea Factory",
+    slug: "idea-factory",
+    status: "archived",
+    type: "app",
+    description: "Idea generation and evaluation tool — predecessor to Unicorn Factory",
+    builtBy: ["rob"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/.openclaw/workspace/projects/idea-factory",
+    branches: [],
+    lastUpdated: "2026-04-27",
+    notes: "Python + documents, superseded by Unicorn Factory"
+  },
+  // === LIBRARY META ===
+  {
+    name: "Project Library",
+    slug: "library",
+    status: "active",
+    type: "dashboard",
+    description: "THIS dashboard — the master directory for all projects",
+    builtBy: ["claude-code", "hermes"],
+    githubRepo: "https://github.com/roblobsterclaw/library",
+    githubPages: "https://roblobsterclaw.github.io/library/",
+    localPath: "~/Documents/GitHub/library",
+    branches: ["main"],
+    lastUpdated: "2026-05-20",
+    notes: "You are here!"
+  }
+];
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const AGENTS = {
+  rob:           { emoji: "🦞", label: "Rob" },
+  hermes:        { emoji: "⚡", label: "Hermes" },
+  "claude-code": { emoji: "🔧", label: "Claude Code" },
+  codex:         { emoji: "🔨", label: "Codex" },
+  joe:           { emoji: "👤", label: "Joe" }
+};
+
+const STATUS_LABELS = {
+  active:   "Active",
+  paused:   "Paused",
+  archived: "Archived",
+  idea:     "Idea"
+};
+
+const TYPE_LABELS = {
+  dashboard: "Dashboard",
+  website:   "Website",
+  app:       "App",
+  document:  "Document",
+  game:      "Game",
+  research:  "Research",
+  rendering: "Rendering"
+};
+
+const STATUS_ORDER = { active: 0, paused: 1, idea: 2, archived: 3 };
+
+/* Current filter state */
+const state = {
+  search: "",
+  status: "all",
+  type: "all",
+  agent: "all"
+};
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function formatDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+/* Sort: active first (status order), then lastUpdated descending */
+function sortProjects(list) {
+  return list.slice().sort((a, b) => {
+    const sa = STATUS_ORDER[a.status] ?? 9;
+    const sb = STATUS_ORDER[b.status] ?? 9;
+    if (sa !== sb) return sa - sb;
+    return (b.lastUpdated || "").localeCompare(a.lastUpdated || "");
+  });
+}
+
+/* =========================================================
+   STATS BAR
+   ========================================================= */
+function renderStats() {
+  const total   = PROJECTS.length;
+  const active  = PROJECTS.filter(p => p.status === "active").length;
+  const live    = PROJECTS.filter(p => p.githubPages).length;
+  const onGit   = PROJECTS.filter(p => p.githubRepo).length;
+
+  const stats = [
+    { num: total,  label: "Total Projects" },
+    { num: active, label: "Active" },
+    { num: live,   label: "Live on Web" },
+    { num: onGit,  label: "On GitHub" }
+  ];
+
+  document.getElementById("stats").innerHTML = stats.map(s => `
+    <div class="stat">
+      <div class="num">${s.num}</div>
+      <div class="label">${s.label}</div>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   FILTER PILLS
+   ========================================================= */
+function buildPills(containerId, key, options) {
+  const container = document.getElementById(containerId);
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (state[key] === opt.value ? " active" : "");
+    btn.textContent = opt.label;
+    btn.dataset.value = opt.value;
+    btn.addEventListener("click", () => {
+      state[key] = opt.value;
+      container.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function buildFilters() {
+  buildPills("status-filters", "status", [
+    { value: "all",      label: "All" },
+    { value: "active",   label: "Active" },
+    { value: "paused",   label: "Paused" },
+    { value: "archived", label: "Archived" },
+    { value: "idea",     label: "Idea" }
+  ]);
+
+  buildPills("type-filters", "type", [
+    { value: "all",       label: "All Types" },
+    { value: "dashboard", label: "Dashboard" },
+    { value: "website",   label: "Website" },
+    { value: "app",       label: "App" },
+    { value: "document",  label: "Document" },
+    { value: "game",      label: "Game" },
+    { value: "research",  label: "Research" },
+    { value: "rendering", label: "Rendering" }
+  ]);
+
+  buildPills("agent-filters", "agent", [
+    { value: "all",         label: "All Agents" },
+    { value: "rob",         label: "🦞 Rob" },
+    { value: "hermes",      label: "⚡ Hermes" },
+    { value: "claude-code", label: "🔧 Claude Code" },
+    { value: "codex",       label: "🔨 Codex" },
+    { value: "joe",         label: "👤 Joe" }
+  ]);
+}
+
+/* =========================================================
+   FILTERING
+   ========================================================= */
+function matches(p) {
+  if (state.status !== "all" && p.status !== state.status) return false;
+  if (state.type   !== "all" && p.type   !== state.type)   return false;
+  if (state.agent  !== "all" && !(p.builtBy || []).includes(state.agent)) return false;
+
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    const haystack = [p.name, p.description, p.notes, p.localPath]
+      .filter(Boolean).join(" ").toLowerCase();
+    if (!haystack.includes(q)) return false;
+  }
+  return true;
+}
+
+/* =========================================================
+   CARD RENDERING
+   ========================================================= */
+function renderCard(p) {
+  const statusLabel = STATUS_LABELS[p.status] || p.status;
+  const typeLabel   = TYPE_LABELS[p.type] || p.type;
+
+  const agents = (p.builtBy || []).map(a => {
+    const info = AGENTS[a];
+    return info
+      ? `<span class="agent-icon" title="${escapeHtml(info.label)}">${info.emoji}</span>`
+      : "";
+  }).join("");
+
+  const nameLinked = p.githubPages ? " linked" : "";
+  const nameClick  = p.githubPages
+    ? ` onclick="window.open('${escapeHtml(p.githubPages)}','_blank','noopener')"`
+    : "";
+
+  /* Links row */
+  let links = "";
+  if (p.githubPages) {
+    links += `<a class="link-btn live" href="${escapeHtml(p.githubPages)}" target="_blank" rel="noopener">🌐 Live Site</a>`;
+  }
+  if (p.githubRepo) {
+    links += `<a class="link-btn github" href="${escapeHtml(p.githubRepo)}" target="_blank" rel="noopener">📂 GitHub</a>`;
+  }
+
+  /* If no live site, show local path instead */
+  let localBlock = "";
+  if (!p.githubPages && p.localPath) {
+    localBlock = `<div class="local-path" title="Mac Mini path">💻 ${escapeHtml(p.localPath)}</div>`;
+  } else if (p.localPath) {
+    localBlock = `<div class="local-path" title="Mac Mini path">💻 Local: ${escapeHtml(p.localPath)}</div>`;
+  }
+
+  const branchInfo = (p.branches && p.branches.length)
+    ? `<span class="branch-info" title="Git branches">⎇ ${p.branches.map(escapeHtml).join(", ")}</span>`
+    : "";
+
+  return `
+    <article class="card${p.githubPages ? " has-live" : ""}" data-slug="${escapeHtml(p.slug)}">
+      <div class="card-head">
+        <div class="card-name${nameLinked}"${nameClick}>${escapeHtml(p.name)}</div>
+      </div>
+      <div class="badges">
+        <span class="badge status-${escapeHtml(p.status)}">${escapeHtml(statusLabel)}</span>
+        <span class="badge type">${escapeHtml(typeLabel)}</span>
+      </div>
+      <p class="card-desc">${escapeHtml(p.description)}</p>
+      <div class="meta-row">
+        <span class="agents">Built by: ${agents || "—"}</span>
+      </div>
+      ${localBlock}
+      ${links ? `<div class="links-row">${links}</div>` : ""}
+      <div class="card-foot">
+        <span>Updated ${formatDate(p.lastUpdated)}</span>
+        ${branchInfo}
+      </div>
+    </article>
+  `;
+}
+
+/* =========================================================
+   MAIN RENDER
+   ========================================================= */
+function render() {
+  const visible = sortProjects(PROJECTS.filter(matches));
+  const grid = document.getElementById("grid");
+
+  if (visible.length === 0) {
+    grid.innerHTML = `<div class="empty">🔍 No projects match your filters.</div>`;
+  } else {
+    grid.innerHTML = visible.map(renderCard).join("");
+  }
+
+  document.getElementById("results-count").innerHTML =
+    `Showing <strong>${visible.length}</strong> of ${PROJECTS.length} projects`;
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  renderStats();
+  buildFilters();
+
+  const searchEl = document.getElementById("search");
+  searchEl.addEventListener("input", e => {
+    state.search = e.target.value.trim();
+    render();
+  });
+
+  render();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
