@@ -332,6 +332,14 @@
     color: var(--gold);
   }
 
+  .link-btn.docs {
+    background: var(--green);
+    border-color: var(--green);
+    color: #FFFFFF;
+  }
+
+  .link-btn.docs:hover { filter: brightness(1.1); }
+
   .card-foot {
     display: flex;
     justify-content: space-between;
@@ -492,6 +500,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/lobster-press",
     branches: ["main"],
     lastUpdated: "2026-05-20",
+    icloudFolder: "Active Projects/Lobster Press",
     notes: "Social media command center"
   },
   {
@@ -534,6 +543,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/daily",
     branches: [],
     lastUpdated: "2026-05-20",
+    icloudFolder: "Reports and Rundowns",
     notes: "45 Python scripts, generates daily .docx reports"
   },
   {
@@ -548,13 +558,14 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/investing",
     branches: [],
     lastUpdated: "2026-05-15",
+    icloudFolder: "Business Documents/Investing Research",
     notes: "Python + HTML research, 112 images"
   },
   // === WEBSITES & GAMES ===
   {
     name: "Document Vault",
     slug: "vault",
-    status: "active",
+    status: "archived",
     type: "website",
     description: "Secure document vault — Word docs, Excel files organized by business area",
     builtBy: ["rob"],
@@ -563,7 +574,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/vault",
     branches: ["main"],
     lastUpdated: "2026-05-07",
-    notes: "154 Word docs, 21 Excel files, password: [redacted]"
+    notes: "154 Word docs, 21 Excel files, password: [redacted]. Superseded by iCloud Drive — files migrated to JFL Command Center on iCloud"
   },
   {
     name: "Unicorn Factory",
@@ -676,6 +687,7 @@ const PROJECTS = [
     localPath: "~/Documents/Codex/REBOLT",
     branches: [],
     lastUpdated: "2026-05-05",
+    icloudFolder: "Active Projects/ReBolt",
     notes: "82 images, git repo but no remote"
   },
   {
@@ -690,6 +702,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/rebolt-renders",
     branches: [],
     lastUpdated: "2026-04-27",
+    icloudFolder: "Renderings and Media/ReBolt Renders",
     notes: "12 render images"
   },
   {
@@ -704,6 +717,7 @@ const PROJECTS = [
     localPath: "~/Documents/Codex/FIREHOUSE RENDERING",
     branches: [],
     lastUpdated: "2026-05-07",
+    icloudFolder: "Renderings and Media/Firehouse Renders",
     notes: "26 images + presentations. Also at ~/.openclaw/workspace/projects/firehouse (38 images)"
   },
   {
@@ -718,13 +732,14 @@ const PROJECTS = [
     localPath: "~/Documents/Codex/equipment-scout-app",
     branches: [],
     lastUpdated: "2026-05-14",
+    icloudFolder: "Active Projects/Equipment Scout",
     notes: "Python app, git but no remote"
   },
   // === DOCUMENTS & RESEARCH ===
   {
     name: "Document Vault (Local Backup)",
     slug: "document-vault-local",
-    status: "active",
+    status: "archived",
     type: "document",
     description: "Local backup of online Document Vault — 154 Word docs, 21 Excel files",
     builtBy: ["joe", "rob"],
@@ -733,7 +748,7 @@ const PROJECTS = [
     localPath: "~/Documents/Document Vault",
     branches: [],
     lastUpdated: "2026-05-07",
-    notes: "Mirrors online vault. Categories: Research, ReBolt, Investing, Family, Firehouse, Tuckerton, Surfbox, Lobster Press, Rundowns"
+    notes: "Mirrors online vault. Categories: Research, ReBolt, Investing, Family, Firehouse, Tuckerton, Surfbox, Lobster Press, Rundowns. Superseded by iCloud Drive — files migrated to JFL Command Center on iCloud"
   },
   {
     name: "HSA vs HRA Research",
@@ -775,6 +790,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/social-media",
     branches: [],
     lastUpdated: "2026-04-27",
+    icloudFolder: "Active Projects/Social Media",
     notes: "Python + documents"
   },
   {
@@ -789,6 +805,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/ceremony",
     branches: [],
     lastUpdated: "2026-04-27",
+    icloudFolder: "Active Projects/Ceremony",
     notes: "3 Word docs"
   },
   {
@@ -803,6 +820,7 @@ const PROJECTS = [
     localPath: "~/.openclaw/workspace/projects/tlc",
     branches: [],
     lastUpdated: "2026-04-27",
+    icloudFolder: "Active Projects/Tuckerton Lumber",
     notes: "HTML + documents + images, includes zoning subfolder"
   },
   {
@@ -1118,6 +1136,9 @@ function renderCard(p) {
   }
   if (p.githubRepo) {
     links += `<a class="link-btn github" href="${escapeHtml(p.githubRepo)}" target="_blank" rel="noopener">📂 GitHub</a>`;
+  }
+  if (p.icloudFolder) {
+    links += `<a class="link-btn docs" href="https://www.icloud.com/iclouddrive/043dz2esR-W2WOZs-KmdIgb1A#JFL_Command_Center" target="_blank" rel="noopener">📁 Documents</a>`;
   }
 
   /* If no live site, show local path instead */
