@@ -437,7 +437,7 @@ const PROJECTS = [
     slug: "ai-buildout-intelligence-terminal",
     status: "active",
     type: "app",
-    description: "Private morning cockpit for the AI-buildout investor — provenance + confidence tagging, position-aware ranking, Frontier Lab Watch, superinvestor tracker, Gold Nugget archive. MVP 1.",
+    description: "Private morning cockpit for the AI-buildout investor — auto-ingests lab blogs, AI news (RSS), SEC EDGAR filings + YouTube into ranked daily cards with provenance + confidence tagging. Frontier Lab Watch, superinvestor tracker, Gold Nugget archive. MVP 2 (live ingestion engine).",
     builtBy: ["claude"],
     githubRepo: "https://github.com/roblobsterclaw/ai-buildout-intelligence-terminal",
     githubPages: "https://ai-buildout-intelligence-terminal.vercel.app",
@@ -445,7 +445,7 @@ const PROJECTS = [
     icloudFolder: "Active Projects/AI Buildout Intelligence Terminal",
     branches: ["main"],
     lastUpdated: "2026-06-06",
-    notes: "LIVE on Vercel (https://ai-buildout-intelligence-terminal.vercel.app, password-gated). Next.js + Supabase. Private GitHub repo. MVP 1 = manual + seeded data; MVP 2+ adds live ingestion. CLI deploy via 'vercel --prod' (GitHub auto-deploy not yet connected)."
+    notes: "LIVE on Vercel (https://ai-buildout-intelligence-terminal.vercel.app, password-gated). Next.js + Supabase. Private GitHub repo. MVP 2 LIVE: daily auto-ingestion (RSS + SEC EDGAR + YouTube) via Vercel Cron → ranked cards. YouTube needs a free API key. Deploy quirk: fresh CLI builds wedge the project; fix = recreate project (delete+relink) or connect GitHub for auto-deploy."
   },
   {
     name: "MOSE Dashboard",
