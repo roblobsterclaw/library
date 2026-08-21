@@ -433,6 +433,21 @@
 const PROJECTS = [
   // === ACTIVE PROJECTS ===
   {
+    name: "Tiller Sync",
+    slug: "tiller-sync",
+    status: "active",
+    type: "pipeline",
+    description: "Daily automated pipeline on the Mac mini syncing Joe's Tiller-fed Google Sheet into a local archive — 60,954 transactions, 2023-01-20 → 2026-08-20. Foundation for net worth dashboards, monthly Excel packs, and categorization.",
+    builtBy: ["claude"],
+    githubRepo: "",
+    githubPages: "",
+    localPath: "~/tiller",
+    icloudFolder: "Active Projects/Tiller Sync",
+    branches: [],
+    lastUpdated: "2026-08-21",
+    notes: "Phase 3 (data layer) DONE. Runs 7:00 AM daily via launchd (com.jfl.tiller-sync) using venv/bin/python — plain Python, zero Claude usage cost. Archive is a UNION of the live Sheet (60,868 rows) and the seed xlsx (59,013): each held rows the other lacked — 1,941 live-only, 86 xlsx-only orphaned by Chase account re-links. sync.py is APPEND-ONLY for that reason; never rewrite the current-year file from live or those 86 rows vanish. Sheets access uses a read-only scope so no code path can write to a Tiller-managed tab. Every run asserts no month's count decreased and writes outputs/SYNC_ERROR.txt on failure without touching the archive. Dedup verified by withholding 25 rows and round-tripping. iCloud holds code/docs/aggregates only — row-level data and the service account key stay on the mini. Phase 4 BLOCKED on three decisions: Truist stale balances (~$1.45M overstatement), Chase duplicate cleanup (23 pairs), and the category scheme choice."
+  },
+  {
     name: "AI Buildout Intelligence Terminal",
     slug: "ai-buildout-intelligence-terminal",
     status: "active",
