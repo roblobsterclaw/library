@@ -437,16 +437,17 @@ const PROJECTS = [
     slug: "tiller-sync",
     status: "active",
     type: "pipeline",
-    description: "Daily automated pipeline on the Mac mini syncing Joe's Tiller-fed Google Sheet into a local archive — 60,954 transactions, 2023-01-20 → 2026-08-20. Foundation for net worth dashboards, monthly Excel packs, and categorization.",
+    description: "Joe's financial command center. A 7:00 AM daily pipeline on the Mac mini pulls his Tiller Google Sheet into a 61,000-row local archive, then builds two workbooks: JFL_Financial_Master.xlsx (17 tabs — balance sheet at ownership share, asset & debt schedule, cards, wallet, recurring transfers, estate basis) and JFL_Property_Accounts.xlsx (vendor and utility accounts by property). Plus a printable action list.",
     builtBy: ["claude"],
     githubRepo: "",
     githubPages: "",
     localPath: "~/tiller",
     icloudFolder: "Active Projects/Tiller Sync",
     branches: [],
-    lastUpdated: "2026-08-21",
-    notes: "Phase 3 (data layer) DONE. Runs 7:00 AM daily via launchd (com.jfl.tiller-sync) using venv/bin/python — plain Python, zero Claude usage cost. Archive is a UNION of the live Sheet (60,868 rows) and the seed xlsx (59,013): each held rows the other lacked — 1,941 live-only, 86 xlsx-only orphaned by Chase account re-links. sync.py is APPEND-ONLY for that reason; never rewrite the current-year file from live or those 86 rows vanish. Sheets access uses a read-only scope so no code path can write to a Tiller-managed tab. Every run asserts no month's count decreased and writes outputs/SYNC_ERROR.txt on failure without touching the archive. Dedup verified by withholding 25 rows and round-tripping. iCloud holds code/docs/aggregates only — row-level data and the service account key stay on the mini. Phase 4 BLOCKED on three decisions: Truist stale balances (~$1.45M overstatement), Chase duplicate cleanup (23 pairs), and the category scheme choice."
+    lastUpdated: "2026-09-06",
+    notes: "START HERE: open START_HERE.md in the iCloud folder, or tab 1 of JFL_Financial_Master.xlsx — both list every workbook and what it is for. DELIVERABLES in iCloud: JFL_Financial_Master.xlsx, JFL_Property_Accounts.xlsx, JFL_Action_Items.pdf. Balance sheet computes on Joe's ownership share (TLC and SurfBox 48.33%, Greenville Colorants 40%, personal 100%) and applies it to liabilities as well as assets. $2.05M of phantom balances excluded with written evidence on each. Uncertain assets (doubtful loans, rental equipment, the Chromascape earn-out — $329,945) sit in a below-the-line MEMO block: visible, counted nowhere. Two failure patterns recur and are guarded against: frozen feeds that keep republishing a stale balance, and masked account numbers that collide (two ADP Roths both report as xxxx8303, and TD vs Truist both end 0007) — everything keys on Account ID, never last-4. sync.py is APPEND-ONLY; the archive is a union of the live Sheet and the seed xlsx because each held rows the other lacked. Sheets access is read-only scope. Known data gap: no snapshots 2026-03-09 to 2026-08-04, which is why date-of-death values for the estate work must come from July statements. iCloud holds code, docs, the two workbooks and the vendor file; the service-account key, raw transaction CSVs and account_overrides.json stay on the mini — check_icloud_safe.py enforces it."
   },
+
   {
     name: "AI Buildout Intelligence Terminal",
     slug: "ai-buildout-intelligence-terminal",
